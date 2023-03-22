@@ -2,6 +2,10 @@
 from fastapi import FastAPI
 # Llamamos a la BD para su coneccion con la app 
 from .database import database as conection
+# Importamos los modelos de BD 
+from .database import User
+from .database import Movie
+from .database import UserReview
 
 
 # Creamos el servidor instanciando a la clase 
@@ -18,6 +22,9 @@ def startup():
         conection.connect()
 
         print('Connecting.....')
+
+    conection.create_tables([User, Movie, UserReview])
+
 
 # Evento ShutDown
 @app.on_event('shutdown')
