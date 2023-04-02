@@ -26,9 +26,10 @@ api_v1 = APIRouter(prefix='/api/v1')
 
 
 # Incluimos las rutas de los modulos junto al detalle de las url
-api_v1.app.include_router(user_router)
-api_v1.app.include_router(review_router)
-api_v1.app.include_router(movie_router)
+api_v1.include_router(user_router)
+api_v1.include_router(review_router)
+api_v1.include_router(movie_router)
+app.include_router(api_v1)
 
 
 
@@ -55,6 +56,6 @@ def shutdown():
 # Creamos url index
 @app.get('/')
 async def index():
-    return'hola mundo desde servidor FastApi'
+    return 'hola mundo desde servidor FastApi'
 
 

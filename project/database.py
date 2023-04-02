@@ -1,6 +1,8 @@
 
 from peewee import *
 from datetime import datetime
+# Libreria para la encriptacion md5
+import hashlib
 
 database = MySQLDatabase(
     'reviews_app',
@@ -23,6 +25,12 @@ class User(Model):
     class Meta:
         database = database
         table_name = 'users'
+    
+    @classmethod
+    def create_password(cls, password):
+        h = hashlib.md5()
+        h.update(password.encode('utf-8'))
+        return h.hexdigest()
  
 
  
