@@ -70,4 +70,23 @@ class MovieResponseModel(ResponseModel):
 
 
 
+# -------------  REVIEWS  ------------------
 
+class ReviewValidator():
+    @validator('score')
+    def score_validator(cls, score):
+        if score < 1 or score > 5:
+            raise ValueError ('La calificacion es entre 1 y 5')
+        
+        return score 
+
+class ReviewRequestModel(BaseModel, ReviewValidator):
+    user_id: int
+    movie_id: int
+    review: str
+    score: int 
+
+class ReviewResponseModel(ResponseModel):
+    movie_id: int 
+    review: str
+    score: int 
