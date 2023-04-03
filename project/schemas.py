@@ -51,3 +51,23 @@ class UserResponseModel(ResponseModel):
     id: int
     username: str
 
+
+# -------------  MOVIE  ------------------
+
+class MovieRequestModel(BaseModel):
+    title: str
+
+    @validator('title')
+    def movie_validator(cls, title):
+        if len(title) < 2 or len (title) > 100:
+            raise ValueError ('La longitud debe ser entre 2 y 100 letras')
+        
+        return title
+    
+class MovieResponseModel(ResponseModel):
+    id: int
+    title: str
+
+
+
+
