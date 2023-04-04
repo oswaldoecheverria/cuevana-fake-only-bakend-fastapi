@@ -39,10 +39,23 @@ async def create_review(user_review: ReviewRequestModel):
 
 
 
-# Endpoint - Listar todas las reseñas 
+# # Endpoint - Listar todas las reseñas 
+# @router.get('', response_model=List[ReviewResponseModel])
+# async def get_reviews():
+#     reviews = UserReview.select()
+
+#     # Creamos un listado de objetos de UserReview, los cuales ya pudieron ser serializados
+#     return [ user_review for user_review in reviews ]
+
+
+
+# Endpoint - Listar todas las reseñas con paginacion
 @router.get('', response_model=List[ReviewResponseModel])
-async def get_reviews():
-    reviews = UserReview.select()
+async def pagination_get_reviews(page: int = 1, limit: int =3):
+    reviews = UserReview.select().paginate(page, limit)
 
     # Creamos un listado de objetos de UserReview, los cuales ya pudieron ser serializados
     return [ user_review for user_review in reviews ]
+
+
+
