@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, HTTPException
 # Importamos los modelos de BD
 from ..database import UserReview
@@ -12,6 +13,8 @@ from ..schemas import ReviewResponseModel
 router = APIRouter(prefix='/reviews')
 
 
+
+# Endpoint - Agregar reseña
 @router.post('', response_model=ReviewResponseModel)
 async def create_review(user_review: ReviewRequestModel):
 
@@ -33,3 +36,13 @@ async def create_review(user_review: ReviewRequestModel):
     )
 
     return user_review
+
+
+
+# Endpoint - Listar todas las reseñas 
+@router.get('', response_model=List[ReviewResponseModel])
+async def get_reviews():
+    reviews = UserReview.select()
+
+    # Creamos un listado de objetos de UserReview, los cuales ya pudieron ser serializados
+    return [ user_review for user_review in reviews ]
