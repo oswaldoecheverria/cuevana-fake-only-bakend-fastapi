@@ -24,9 +24,17 @@ async def create_movie(movie: MovieRequestModel):
 
 
 # Endpoint - Listar peliculas
+# @router.get('', response_model=List[MovieResponseModel])
+# async def get_movies():
+#     movies = Movie.select()
+
+#     return [ list_movie for list_movie in movies ]
+
+
+
+# Endpoint - Listar todas las peliculas con paginacion
 @router.get('', response_model=List[MovieResponseModel])
-async def get_reviews():
-    movies = Movie.select()
+async def pagination_get_movies(page: int = 1, limit: int =3):
+    movies = Movie.select().paginate(page, limit)
 
     return [ list_movie for list_movie in movies ]
-
