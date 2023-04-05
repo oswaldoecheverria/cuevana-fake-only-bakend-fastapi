@@ -90,3 +90,9 @@ class ReviewResponseModel(ResponseModel):
     movie_id: int 
     review: str
     score: int 
+
+
+# Validar datos de actualizacion de reseña
+class ReviewRequestPutModel(BaseModel, ReviewValidator):
+    review: str
+    score: int

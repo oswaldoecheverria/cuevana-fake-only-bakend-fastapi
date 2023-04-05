@@ -7,6 +7,7 @@ from ..database import Movie
 # Importamos los schemas 
 from ..schemas import ReviewRequestModel
 from ..schemas import ReviewResponseModel
+from ..schemas import ReviewRequestPutModel
 
 
 
@@ -70,3 +71,23 @@ async def get_review(review_id: int):
     
     return user_review
 
+
+
+
+# Endpoint - Actualizar reseña 
+@router.put('/{review_id}', response_model=ReviewResponseModel)
+async def update_review(review_id: int, review_request: ReviewRequestPutModel):
+
+    user_review = UserReview.select().where(UserReview.id == review_id).first()
+
+    if user_review is None:
+        raise HTTPException(status_code=404, detail='Reseña no encontrada')
+    
+    user_review.review = review_request.review
+    user_review.score = review_request.score
+
+    # persistimos los datos 
+    user_review.save()
+
+    # Retornamos el objeto actualizado 
+    return user_review
