@@ -59,3 +59,14 @@ async def pagination_get_reviews(page: int = 1, limit: int =3):
 
 
 
+# Endpoint - Listar reseña especifica por id
+@router.get('/{review_id}', response_model=ReviewResponseModel)
+async def get_review(review_id: int):
+    
+    user_review = UserReview.select().where(UserReview.id == review_id).first()
+
+    if user_review is None:
+        raise HTTPException(status_code=404, detail='Reseña no encontrada')
+    
+    return user_review
+
