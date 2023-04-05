@@ -87,7 +87,8 @@ class ReviewRequestModel(BaseModel, ReviewValidator):
     score: int 
 
 class ReviewResponseModel(ResponseModel):
-    movie_id: int 
+    id: int 
+    movie: MovieResponseModel
     review: str
     score: int 
 
