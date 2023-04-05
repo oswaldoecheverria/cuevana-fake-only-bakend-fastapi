@@ -49,7 +49,7 @@ class Movie(Model):
 
 class UserReview(Model):
     user = ForeignKeyField(User, backref='reviews')
-    movie = ForeignKeyField(Movie, backref='reviews')
+    movie = ForeignKeyField(Movie)
     review = TextField()
     score = IntegerField()
     create_at = DateField(default=datetime.now)
