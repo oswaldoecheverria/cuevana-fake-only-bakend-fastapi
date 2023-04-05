@@ -38,3 +38,19 @@ async def pagination_get_movies(page: int = 1, limit: int =3):
     movies = Movie.select().paginate(page, limit)
 
     return [ list_movie for list_movie in movies ]
+
+
+
+# Endpoint Eliminar movies
+@router.delete('/{movie_id}', response_model=MovieResponseModel)
+async def delete_movie(movie_id: int):
+    
+    movie = Movie.select().where(Movie.id == movie_id).first()
+
+    if movie is None:
+        raise HTTPException(status_code=404, detail='Pelicula no encontrada')
+    
+    movie.delete_instance()
+
+    return movie
+
