@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, HTTPException
 # Importamos el modelos BD Movie
 from ..database import Movie
@@ -19,4 +20,13 @@ async def create_movie(movie: MovieRequestModel):
     )
 
     return movie
+
+
+
+# Endpoint - Listar peliculas
+@router.get('', response_model=List[MovieResponseModel])
+async def get_reviews():
+    movies = Movie.select()
+
+    return [ list_movie for list_movie in movies ]
 
