@@ -25,6 +25,19 @@ class User(Model):
     class Meta:
         database = database
         table_name = 'users'
+
+
+    @classmethod
+    def authenticate(cls, username, password):
+        # Validamos que un usuario exista a traves del username 
+        user = cls.select().where(User.username == username).first()
+
+        # Validamos el usuario y el passwor, el password a traves 
+        # del metodo de clase que crea el hash 
+        if user and user.password == cls.create_password(password):
+            return user
+
+    
     
     @classmethod
     def create_password(cls, password):
