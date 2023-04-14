@@ -12,6 +12,10 @@ from ..schemas import ReviewResponseModel
 from fastapi.security import HTTPBasicCredentials
 # Importamos libreria que permite el uso de cookies para autenticacion
 from fastapi import Cookie
+# OAuth2 
+from fastapi import Depends
+from ..common import oauth2_schema
+from ..common import get_current_user
 
 
 
@@ -57,8 +61,8 @@ async def login(credentials: HTTPBasicCredentials, response: Response):
     return user
 
 
-
-
+# Codigo Get reviews con cookies 
+"""
 # Listado de resñas de un usurio autenticado
 @router.get('/reviews', response_model=List[ReviewResponseModel])
 async def get_userauth_reviews(page: int = 1, limit: int = 2, user_id: int = Cookie(None)):
@@ -71,6 +75,15 @@ async def get_userauth_reviews(page: int = 1, limit: int = 2, user_id: int = Coo
     
 
     # el reviews del user.reviews es del atributo backref del modelo de BD
+    return [ user_review for user_review in user.reviews.paginate(page,limit) ]
+
+"""
+
+
+# Listado de reseñas de un usurio autenticado con OAuth2
+@router.get('/reviews', response_model=List[ReviewResponseModel])
+async def get_oauth_reviews( page: int = 1, limit: int = 2, user: User = Depends(get_current_user)):
+    
     return [ user_review for user_review in user.reviews.paginate(page,limit) ]
 
 
