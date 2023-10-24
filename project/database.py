@@ -4,10 +4,13 @@ from datetime import datetime
 # Libreria para la encriptacion md5
 import hashlib
 
+from local_settings import USER_DATABASE
+from local_settings import PASSWORD_DATATSE
+
 database = MySQLDatabase(
     'reviews_app',
-    user = 'root',
-    password = 'abc123....',
+    user = USER_DATABASE,
+    password = PASSWORD_DATATSE,
     host = 'localhost',
     port = 3306
 )
